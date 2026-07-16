@@ -380,6 +380,9 @@
     .hero { padding: 5rem 1rem 3rem; }
     section { padding: 3.5rem 1rem; }
   }
+  @media (max-width: 700px) {
+    #ai-blogger .ai-grid { grid-template-columns: 1fr !important; }
+  }
 </style>
 </head>
 <body>
@@ -662,6 +665,58 @@
 
 <hr class="divider">
 
+<!-- AI BLOGGER -->
+<section id="ai-blogger">
+  <div class="section-label">Pro — ИИ-Блогер</div>
+  <h2>Абсолютно реальный.<br>Полностью искусственный.</h2>
+  <p class="section-sub">Ваш персональный ИИ-блогер — уникальное лицо, голос и характер, созданные специально для вашего бренда. Снимается в любой локации, говорит на любую тему.</p>
+
+  <div class="ai-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:2rem; align-items:start; margin-bottom:2rem;">
+    <div style="border-radius:16px; overflow:hidden; border:1px solid var(--border); position:relative;">
+      <img src="assets/blogger-female.jpg" alt="ИИ-блогер женщина" style="width:100%; display:block; object-fit:cover;">
+      <div style="position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent, rgba(0,0,0,0.75)); padding:1.25rem 1rem 1rem;">
+        <div style="color:#fff; font-weight:600; font-size:0.95rem;">Алина</div>
+        <div style="color:rgba(255,255,255,0.7); font-size:0.8rem;">ИИ-блогер · Бизнес и финансы</div>
+      </div>
+    </div>
+    <div style="border-radius:16px; overflow:hidden; border:1px solid var(--border); position:relative;">
+      <img src="assets/blogger-male.jpg" alt="ИИ-блогер мужчина" style="width:100%; display:block; object-fit:cover;">
+      <div style="position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent, rgba(0,0,0,0.75)); padding:1.25rem 1rem 1rem;">
+        <div style="color:#fff; font-weight:600; font-size:0.95rem;">Максим</div>
+        <div style="color:rgba(255,255,255,0.7); font-size:0.8rem;">ИИ-блогер · Недвижимость и продажи</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1.25rem; margin-top:2rem;">
+    <div style="background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:1.25rem;">
+      <div style="font-size:1.1rem; margin-bottom:0.5rem;">🎭</div>
+      <h3 style="font-size:0.95rem; margin-bottom:0.4rem;">Уникальный персонаж</h3>
+      <p style="font-size:0.83rem; color:var(--muted); line-height:1.5;">Лицо, голос и внешность генерируются специально для вас — никаких шаблонных аватаров.</p>
+    </div>
+    <div style="background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:1.25rem;">
+      <div style="font-size:1.1rem; margin-bottom:0.5rem;">📍</div>
+      <h3 style="font-size:0.95rem; margin-bottom:0.4rem;">Любая локация</h3>
+      <p style="font-size:0.83rem; color:var(--muted); line-height:1.5;">Офис, кафе, улицы Дубая или горы Алатау — блогер "снимается" где нужно для вашего бренда.</p>
+    </div>
+    <div style="background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:1.25rem;">
+      <div style="font-size:1.1rem; margin-bottom:0.5rem;">🗣</div>
+      <h3 style="font-size:0.95rem; margin-bottom:0.4rem;">Говорит и продаёт</h3>
+      <p style="font-size:0.83rem; color:var(--muted); line-height:1.5;">Рассказывает о вашем продукте, даёт советы, отвечает на возражения — как живой эксперт.</p>
+    </div>
+    <div style="background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:1.25rem;">
+      <div style="font-size:1.1rem; margin-bottom:0.5rem;">📱</div>
+      <h3 style="font-size:0.95rem; margin-bottom:0.4rem;">YouTube + Instagram + Telegram</h3>
+      <p style="font-size:0.83rem; color:var(--muted); line-height:1.5;">2 видео в неделю автоматически выходят на всех платформах. Без съёмочной группы.</p>
+    </div>
+  </div>
+  <div style="margin-top:2rem;">
+    <a href="#contact" class="btn-primary">Хочу своего ИИ-блогера</a>
+  </div>
+</section>
+
+<hr class="divider">
+
 <!-- PRICING -->
 <section id="pricing">
   <div class="section-label">Тарифы</div>
@@ -728,13 +783,14 @@
     <div style="background:var(--bg2); border:1px solid var(--border); border-radius:16px; padding:1.75rem; display:flex; flex-direction:column;">
       <div style="font-size:0.75rem; font-weight:700; letter-spacing:0.08em; color:var(--muted); margin-bottom:0.75rem;">PRO</div>
       <div style="font-size:2rem; font-weight:800; letter-spacing:-0.03em; margin-bottom:0.25rem;">249 000 <span style="font-size:0.9rem; font-weight:400; color:var(--muted);">₸/мес</span></div>
-      <div style="font-size:0.82rem; color:var(--muted); margin-bottom:1.5rem;">ИИ-Блогер на трёх платформах</div>
+      <div style="font-size:0.82rem; color:var(--muted); margin-bottom:1.5rem;">Ваш личный ИИ-блогер на трёх платформах</div>
       <div style="border-top:1px solid var(--border); padding-top:1.25rem; flex:1;">
-        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> YouTube Shorts — 2 видео в неделю</div>
-        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Instagram Reels (то же видео)</div>
-        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Telegram — ссылка + текст поста</div>
-        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> ИИ-голос и субтитры в видео</div>
-        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Личный менеджер проекта</div>
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.85rem;"><span style="color:var(--green); margin-top:1px;">✓</span> <strong>Ваш ИИ-блогер</strong> — реалистичный персонаж, лицо и голос созданы специально для вас</div>
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.85rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Снимается в любой локации — офис, улица, студия, природа</div>
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.85rem;"><span style="color:var(--green); margin-top:1px;">✓</span> YouTube Shorts + Instagram Reels — 2 видео в неделю</div>
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.85rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Telegram — ссылка на видео + текст поста</div>
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.85rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Субтитры, монтаж, фирменный стиль</div>
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.85rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Личный менеджер проекта</div>
       </div>
       <a href="#contact" style="display:block; text-align:center; margin-top:1.5rem; padding:0.75rem; border:1px solid var(--border2); border-radius:10px; font-size:0.9rem; font-weight:500; transition:background 0.15s;" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='transparent'">Начать</a>
     </div>
