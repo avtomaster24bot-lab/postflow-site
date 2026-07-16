@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PostFlow — автоматический контент для вашего бизнеса</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #1a1a24;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.15);
+    --text: #f0f0f0;
+    --muted: #888899;
+    --accent: #6c63ff;
+    --accent2: #9d97ff;
+    --accent-glow: rgba(108,99,255,0.15);
+    --green: #22c55e;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.6;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-size: 1.35rem; font-weight: 700; letter-spacing: -0.03em;
+    color: #fff;
+  }
+  .logo span { color: var(--accent2); }
+  .nav-cta {
+    background: var(--accent);
+    color: #fff;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(108,99,255,0.12) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -60%);
+    pointer-events: none;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--accent-glow);
+    border: 1px solid rgba(108,99,255,0.3);
+    color: var(--accent2);
+    padding: 0.3rem 0.9rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+  }
+  .badge::before { content: '●'; font-size: 0.5rem; color: var(--green); }
+  h1 {
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.25rem;
+    max-width: 800px;
+  }
+  h1 em { color: var(--accent2); font-style: normal; }
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+  .hero-btns {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    padding: 0.85rem 2rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: transform 0.15s, opacity 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { transform: translateY(-1px); opacity: 0.9; }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    padding: 0.85rem 2rem;
+    border-radius: 10px;
+    border: 1px solid var(--border2);
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background 0.15s;
+  }
+  .btn-outline:hover { background: var(--bg3); }
+
+  /* PREVIEW CARD */
+  .preview {
+    margin-top: 3.5rem;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    max-width: 420px;
+    width: 100%;
+    text-align: left;
+  }
+  .preview-bar {
+    display: flex; align-items: center; gap: 6px;
+    padding: 0.75rem 1rem;
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f56; }
+  .dot-y { background: #ffbd2e; }
+  .dot-g { background: #27c93f; }
+  .preview-label {
+    margin-left: auto;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .preview-img {
+    width: 100%; height: 200px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    display: flex; align-items: flex-end;
+    padding: 1rem;
+    position: relative;
+  }
+  .preview-img-label {
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    width: 100%;
+    text-align: center;
+    backdrop-filter: blur(4px);
+  }
+  .preview-logo {
+    position: absolute; top: 0.75rem; right: 0.75rem;
+    background: rgba(255,255,255,0.15);
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 0.7rem; font-weight: 700;
+    color: #fff; letter-spacing: 0.05em;
+    backdrop-filter: blur(4px);
+  }
+  .preview-body { padding: 1rem; }
+  .preview-body p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+  }
+  .preview-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag {
+    font-size: 0.72rem;
+    color: var(--accent2);
+    background: var(--accent-glow);
+    border-radius: 4px;
+    padding: 2px 8px;
+  }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 0.75rem;
+  }
+  h2 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 520px;
+    margin-bottom: 3rem;
+  }
+
+  /* HOW IT WORKS */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+  .step {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .step:hover { border-color: rgba(108,99,255,0.3); }
+  .step-num {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent2);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+  }
+  .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem; }
+  .step p { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+  .step-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  /* WHAT YOU GET */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .feature {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .feature:hover { border-color: var(--border2); background: var(--bg3); }
+  .feature-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: var(--accent-glow);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+  .feature h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem; }
+  .feature p { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+
+  /* USECASES */
+  .niches {
+    display: flex; flex-wrap: wrap; gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+  .niche {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.45rem 1.1rem;
+    font-size: 0.88rem;
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+  .niche:hover { border-color: var(--accent); color: var(--accent2); }
+
+  /* PLATFORMS */
+  .platforms {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+  .platform {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+  .platform.active { border-color: rgba(108,99,255,0.4); }
+  .platform.coming { opacity: 0.5; }
+  .platform-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+  .platform h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .platform p { font-size: 0.75rem; color: var(--muted); }
+  .pill-soon {
+    display: inline-block;
+    font-size: 0.65rem;
+    background: rgba(255,189,46,0.15);
+    color: #ffbd2e;
+    border-radius: 4px;
+    padding: 1px 6px;
+    margin-top: 0.3rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .pill-active {
+    display: inline-block;
+    font-size: 0.65rem;
+    background: rgba(34,197,94,0.15);
+    color: var(--green);
+    border-radius: 4px;
+    padding: 1px 6px;
+    margin-top: 0.3rem;
+    font-weight: 600;
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3.5rem 2rem;
+    text-align: center;
+    margin: 2rem auto;
+    max-width: 1100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(108,99,255,0.1) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .cta-section h2 { margin-bottom: 0.75rem; }
+  .cta-section p { color: var(--muted); margin-bottom: 2rem; font-size: 1.05rem; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 1rem; }
+    .hero { padding: 5rem 1rem 3rem; }
+    section { padding: 3.5rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Post<span>Flow</span></div>
+  <a href="#contact" class="nav-cta">Узнать стоимость</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">Работает прямо сейчас</div>
+  <h1>Ваш бизнес постит сам.<br><em>Каждый день.</em></h1>
+  <p class="hero-sub">
+    Настраиваем автоматический поток контента под вашу нишу —
+    текст, картинка с логотипом и заголовком — прямо в Telegram-канал. Без копирайтера. Без SMM-менеджера.
+  </p>
+  <div class="hero-btns">
+    <a href="#contact" class="btn-primary">Запустить конвейер</a>
+    <a href="#how" class="btn-outline">Как это работает</a>
+  </div>
+
+  <div class="preview">
+    <div class="preview-bar">
+      <div class="dot dot-r"></div>
+      <div class="dot dot-y"></div>
+      <div class="dot dot-g"></div>
+      <span class="preview-label">Telegram Channel · Auto</span>
+    </div>
+    <div class="preview-img">
+      <div class="preview-logo">ВАШЕ ЛОГО</div>
+      <div class="preview-img-label">Заголовок поста — автоматически из текста</div>
+    </div>
+    <div class="preview-body">
+      <p>Сегодня разбираем главный вопрос, который задают наши клиенты каждый день — и даём конкретный ответ с цифрами...</p>
+      <div class="preview-tags">
+        <span class="tag">#вашаниша</span>
+        <span class="tag">#казахстан</span>
+        <span class="tag">#полезно</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-label">Как работает</div>
+  <h2>От брифа до первого поста — за 3 дня</h2>
+  <p class="section-sub">Вы рассказываете о бизнесе — мы настраиваем систему. Дальше она работает сама.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-icon">📋</div>
+      <h3>Бриф</h3>
+      <p>Рассказываете о нише, продукте, аудитории. Присылаете логотип.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-icon">✍️</div>
+      <h3>Контент</h3>
+      <p>Создаём пул текстов, советов, шаблонов и цитат под вашу тему.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-icon">⚙️</div>
+      <h3>Настройка</h3>
+      <p>Подключаем Telegram-канал, настраиваем расписание и логотип.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-icon">🚀</div>
+      <h3>Запуск</h3>
+      <p>Каждый день в нужное время — пост с картинкой уходит в канал сам.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- WHAT YOU GET -->
+<section id="features">
+  <div class="section-label">Что входит</div>
+  <h2>Не просто текст — готовый пост</h2>
+  <p class="section-sub">Каждый пост выходит как законченный маркетинговый материал, который можно копировать в любую соцсеть.</p>
+
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">🖼</div>
+      <h3>Уникальная картинка</h3>
+      <p>Генерируется по теме поста через ИИ. Новая каждый день — без банков изображений и повторов.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🏷</div>
+      <h3>Заголовок поверх фото</h3>
+      <p>Жирный белый текст на тёмной подложке — как у профессиональных SMM-постов. Читается сразу.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🎨</div>
+      <h3>Ваш логотип</h3>
+      <p>Накладывается в угол каждой картинки. Клиенты видят бренд — даже когда пост репостят.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📝</div>
+      <h3>Экспертный текст</h3>
+      <p>Советы, лайфхаки, продающие посты, цитаты — всё чередуется автоматически. Без повторений неделями.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📅</div>
+      <h3>Расписание</h3>
+      <p>Выходит в удобное время: утром перед работой, в обеденный перерыв — как вам нужно.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🔄</div>
+      <h3>Обновление контента</h3>
+      <p>Ежемесячно добавляем новые тексты, актуальные темы и сезонные посты под ваш бизнес.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- NICHES -->
+<section id="niches">
+  <div class="section-label">Ниши</div>
+  <h2>Работает для любого бизнеса</h2>
+  <p class="section-sub">Настраиваем под любую тему — достаточно рассказать о своём продукте.</p>
+
+  <div class="niches">
+    <div class="niche">🏠 Недвижимость</div>
+    <div class="niche">🚗 Авто и СТО</div>
+    <div class="niche">🚲 Спортивные товары</div>
+    <div class="niche">✈️ Туризм и визы</div>
+    <div class="niche">💇 Красота и уход</div>
+    <div class="niche">🍕 Доставка еды</div>
+    <div class="niche">⚖️ Юридические услуги</div>
+    <div class="niche">🦷 Стоматология</div>
+    <div class="niche">🏋️ Фитнес и тренеры</div>
+    <div class="niche">📦 Интернет-магазины</div>
+    <div class="niche">🏗 Строительство</div>
+    <div class="niche">💻 IT и сервисы</div>
+    <div class="niche">и любая другая ниша →</div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PLATFORMS -->
+<section id="platforms">
+  <div class="section-label">Платформы</div>
+  <h2>Сейчас и в будущем</h2>
+  <p class="section-sub">Начинаем с Telegram. При расширении сотрудничества добавляем другие каналы.</p>
+
+  <div class="platforms">
+    <div class="platform active">
+      <div class="platform-icon">✈️</div>
+      <h4>Telegram</h4>
+      <p>Канал, посты, картинки</p>
+      <span class="pill-active">Работает</span>
+    </div>
+    <div class="platform coming">
+      <div class="platform-icon">📸</div>
+      <h4>Instagram</h4>
+      <p>Фото и Reels</p>
+      <span class="pill-soon">Скоро</span>
+    </div>
+    <div class="platform coming">
+      <div class="platform-icon">▶️</div>
+      <h4>YouTube</h4>
+      <p>Shorts и описания</p>
+      <span class="pill-soon">Скоро</span>
+    </div>
+    <div class="platform coming">
+      <div class="platform-icon">📘</div>
+      <h4>VK</h4>
+      <p>Посты и истории</p>
+      <span class="pill-soon">Скоро</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-label">Тарифы</div>
+  <h2>Выберите свой план</h2>
+  <p class="section-sub">Начните с Telegram — добавьте платформы когда будете готовы расти.</p>
+
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 2rem;">
+
+    <div style="background:var(--bg2); border:1px solid var(--border); border-radius:16px; padding:1.75rem; display:flex; flex-direction:column;">
+      <div style="font-size:0.75rem; font-weight:700; letter-spacing:0.08em; color:var(--muted); margin-bottom:0.75rem;">BASIC</div>
+      <div style="font-size:2.4rem; font-weight:800; letter-spacing:-0.03em; margin-bottom:0.25rem;">49 000 <span style="font-size:1rem; font-weight:400; color:var(--muted);">₸/мес</span></div>
+      <div style="font-size:0.82rem; color:var(--muted); margin-bottom:1.5rem;">Автопостинг в Telegram</div>
+      <div style="border-top:1px solid var(--border); padding-top:1.25rem; flex:1;">
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Ежедневный пост в Telegram-канал</div>
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Уникальная ИИ-картинка каждый день</div>
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Ваш логотип на каждом посте</div>
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Заголовок поверх картинки</div>
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Экспертный текст под вашу нишу</div>
+      </div>
+      <a href="#contact" style="display:block; text-align:center; margin-top:1.5rem; padding:0.75rem; border:1px solid var(--border2); border-radius:10px; font-size:0.9rem; font-weight:500; transition:background 0.15s;" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='transparent'">Начать</a>
+    </div>
+
+    <div style="background:var(--bg2); border:2px solid rgba(108,99,255,0.5); border-radius:16px; padding:1.75rem; display:flex; flex-direction:column; position:relative;">
+      <div style="position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--accent); color:#fff; font-size:0.7rem; font-weight:700; padding:3px 14px; border-radius:100px; letter-spacing:0.05em; white-space:nowrap;">ПОПУЛЯРНЫЙ</div>
+      <div style="font-size:0.75rem; font-weight:700; letter-spacing:0.08em; color:var(--accent2); margin-bottom:0.75rem;">STANDARD</div>
+      <div style="font-size:2.4rem; font-weight:800; letter-spacing:-0.03em; margin-bottom:0.25rem;">99 000 <span style="font-size:1rem; font-weight:400; color:var(--muted);">₸/мес</span></div>
+      <div style="font-size:0.82rem; color:var(--muted); margin-bottom:1.5rem;">Telegram + Instagram</div>
+      <div style="border-top:1px solid var(--border); padding-top:1.25rem; flex:1;">
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Всё из Basic</div>
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Дублирование в Instagram</div>
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Один контент — две платформы</div>
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Ежемесячное обновление контента</div>
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Приоритетная поддержка</div>
+      </div>
+      <a href="#contact" style="display:block; text-align:center; margin-top:1.5rem; padding:0.75rem; background:var(--accent); border-radius:10px; font-size:0.9rem; font-weight:600; color:#fff; transition:opacity 0.15s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Начать</a>
+    </div>
+
+    <div style="background:var(--bg2); border:1px solid var(--border); border-radius:16px; padding:1.75rem; display:flex; flex-direction:column;">
+      <div style="font-size:0.75rem; font-weight:700; letter-spacing:0.08em; color:var(--muted); margin-bottom:0.75rem;">PRO</div>
+      <div style="font-size:2.4rem; font-weight:800; letter-spacing:-0.03em; margin-bottom:0.25rem;">249 000 <span style="font-size:1rem; font-weight:400; color:var(--muted);">₸/мес</span></div>
+      <div style="font-size:0.82rem; color:var(--muted); margin-bottom:1.5rem;">ИИ-Блогер на трёх платформах</div>
+      <div style="border-top:1px solid var(--border); padding-top:1.25rem; flex:1;">
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> YouTube Shorts — 2 видео в неделю</div>
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Instagram Reels (то же видео)</div>
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Telegram — ссылка + текст поста</div>
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> ИИ-голос и субтитры в видео</div>
+        <div style="display:flex; gap:0.6rem; align-items:flex-start; margin-bottom:0.75rem; font-size:0.88rem;"><span style="color:var(--green); margin-top:1px;">✓</span> Личный менеджер проекта</div>
+      </div>
+      <a href="#contact" style="display:block; text-align:center; margin-top:1.5rem; padding:0.75rem; border:1px solid var(--border2); border-radius:10px; font-size:0.9rem; font-weight:500; transition:background 0.15s;" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='transparent'">Начать</a>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CTA -->
+<div class="cta-section" id="contact">
+  <div class="section-label">Начать</div>
+  <h2>Запустите PostFlow для своего бизнеса</h2>
+  <p>Расскажите о нише — рассчитаем стоимость и запустим за 3 дня.</p>
+  <div class="hero-btns" style="justify-content:center">
+    <a href="https://t.me/GrifRift555" class="btn-primary">Написать в Telegram</a>
+  </div>
+  <p style="margin-top:1.5rem; font-size:0.82rem; color:var(--muted);">
+    Средний срок запуска — 3 рабочих дня после брифинга
+  </p>
+</div>
+
+<footer>
+  <p>© 2026 PostFlow — автоматический контент для бизнеса · Казахстан</p>
+</footer>
+
+</body>
+</html>
